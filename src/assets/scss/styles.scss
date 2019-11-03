@@ -1,0 +1,16 @@
+@import 'variables';
+@import 'reset';
+
+body {
+    font-size: 14px;
+    //font-family: ;
+    font-weight: 600;
+    background-color: $grey;
+}
+.container {
+    max-width: 1110px;
+    margin: 0 auto;
+}
+.content {
+    margin-bottom: 140px;
+}

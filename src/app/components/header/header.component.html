@@ -1,7 +1,31 @@
-<header>
+<header class="header">
     <div class="container">
-        <div class="title uui-caption-style">VIDEO COURSE</div>
-        <div class="menu-button uui-caption-style">Log off</div>
-        <div class="menu-button uui-caption-style">User Login</div>
+        <div class="header__wrapper">
+            <a routerLink="" class="header__logo-container">
+                <img [src]="logo" alt="courses logo" class="header__logo">
+            </a>
+            <ng-container *ngIf="isLogged">
+                <div class="header__controls">
+                    <p class="header__controls-item">
+                        <i class="header__icon fa fa-user" aria-hidden="true"></i>
+                        {{userName}}
+                    </p>
+                    <a
+                            class="header__controls-item"
+                            (click)="onLogOff()">
+                        <i class="header__icon fa fa-sign-out" aria-hidden="true"></i>
+                        Log off
+                    </a>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLogged">
+                <a
+                        class="header__link"
+                        (click)="onLogIn()">
+                    <i class="header__icon fa fa-sign-in" aria-hidden="true"></i>
+                    User login
+                </a>
+            </ng-container>
+        </div>
     </div>
 </header>
