@@ -9,6 +9,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CoursePageComponent } from './components/course-page/course-page.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CourseComponent } from './components/course/course.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CourseComponent } from './components/course/course.component';
     LogoComponent,
     CoursePageComponent,
     BreadcrumbComponent,
-    CourseComponent
+    CourseComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
