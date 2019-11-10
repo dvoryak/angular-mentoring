@@ -1,0 +1,40 @@
+<div class="course">
+    <div class="course__content">
+        <div class="course__info">
+            <h2 class="course__title">{{course?.title}}</h2>
+            <div class="course__data">
+                <span class="course__data-item">
+                    <i class="course__icon fa fa-clock-o" aria-hidden="true"></i>
+                    {{course?.duration}}
+                </span>
+                <time class="course__data-item">
+                    <i class="course__icon fa fa-calendar" aria-hidden="true"></i>
+                    {{course?.creationDate}}
+                </time>
+            </div>
+        </div>
+        <p class="course__description">{{course?.description}}</p>
+    </div>
+    <div class="course__controls">
+        <div class="course__button-wrapper">
+            <button
+                    class="course__button"
+                    (click)="onEdit()">
+                <span class="course__button-text">
+                    <i class="course__icon fa fa-pencil" aria-hidden="true"></i>
+                    Edit
+                </span>
+            </button>
+        </div>
+        <div class="course__button-wrapper">
+            <button
+                    class="course__button"
+                    (click)="onDelete()">
+                <span class="course__button-text">
+                    <i class="course__icon fa fa-trash" aria-hidden="true"></i>
+                    Delete
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

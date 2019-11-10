@@ -1,0 +1,108 @@
+/*colors*/
+/*fonts*/
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+button {
+  background-color: transparent;
+  color: inherit;
+  border-width: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+figure {
+  margin: 0;
+}
+
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+ul, ol, dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+p {
+  margin: 0;
+}
+
+cite {
+  font-style: normal;
+}
+
+fieldset {
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #f2f3f7;
+}
+
+.container {
+  max-width: 1110px;
+  margin: 0 auto;
+}
+
+.content {
+  margin-bottom: 140px;
+}
+
+.courses__add {
+  text-align: right;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.courses__add-button {
+  padding: 10px 24px;
+  color: #fff;
+  background-color: #30b6dd;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+}
+.courses__icon {
+  margin-right: 12px;
+  font-size: 20px;
+  font-weight: normal;
+}
+.courses__more {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  background-color: #fff;
+  text-align: center;
+  color: #577ce6;
+  border-radius: 6px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+}
+.courses__more-text {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=course-page.component.css.map */
