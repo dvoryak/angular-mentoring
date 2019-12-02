@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -11,6 +11,7 @@ export class SearchComponent implements OnInit {
   public isSubmitted = false;
   // TODO placeholder text
   public placeholder = 'Text to search';
+  public value = '';
 
   constructor() { }
 
@@ -18,7 +19,8 @@ export class SearchComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const searchText = this.searchForm.controls.searchText.value;
+    const searchText = this.value;
+    console.log(searchText);
     if (searchText && searchText.length) {
       this.isSubmitted = true;
     }
