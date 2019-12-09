@@ -9,7 +9,7 @@
                 </span>
                 <time class="course__data-item">
                     <i class="course__icon fa fa-calendar" aria-hidden="true"></i>
-                    {{course?.creationDate}}
+                    {{course?.creationDate | date: "d MMM, yyyy"}}
                 </time>
             </div>
         </div>
