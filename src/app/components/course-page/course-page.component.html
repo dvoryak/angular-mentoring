@@ -8,7 +8,7 @@
             <span class="courses__text">Add course</span>
         </button>
     </div>
-    <div class="courses">
+    <div class="courses"  *ngIf="courses && courses.length; else noData">
         <app-course
                 class="courses__item"
                 *ngFor="let course of courses | orderBy"
@@ -25,4 +25,10 @@
             <span class="courses__more-text">{{'Load more' | uppercase}}</span>
         </button>
     </div>
+
+    <ng-template #noData>
+        <div class="courses__no-data">
+            {{'No data. Feel free to add new course'| uppercase}}
+        </div>
+    </ng-template>
 </div>
