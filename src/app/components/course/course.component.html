@@ -1,4 +1,6 @@
-<div class="course">
+<div class="course"
+     appCourseBorder
+     [creationDate]="course?.creationDate">
     <div class="course__content">
         <div class="course__info">
             <h2 class="course__title">{{course?.title | uppercase}}</h2>

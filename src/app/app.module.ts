@@ -9,10 +9,11 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CoursePageComponent } from './components/course-page/course-page.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CourseComponent } from './components/course/course.component';
-import { SearchComponent } from './components/search/search.component';
 import {FormsModule} from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
+import { CourseBorderDirective } from './directives/course-border.directive';
+import {SearchComponent} from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
     SearchComponent,
     DurationPipe,
     OrderByPipe,
+    CourseBorderDirective
   ],
   imports: [
     BrowserModule,
