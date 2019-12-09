@@ -12,6 +12,7 @@ import { CourseComponent } from './components/course/course.component';
 import { SearchComponent } from './components/search/search.component';
 import {FormsModule} from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DurationPipe } from './pipes/duration.pipe';
     CourseComponent,
     SearchComponent,
     DurationPipe,
+    OrderByPipe,
   ],
   imports: [
     BrowserModule,
