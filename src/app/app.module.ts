@@ -11,6 +11,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { CourseComponent } from './components/course/course.component';
 import { SearchComponent } from './components/search/search.component';
 import {FormsModule} from '@angular/forms';
+import { DurationPipe } from './pipes/duration.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {FormsModule} from '@angular/forms';
     CoursePageComponent,
     BreadcrumbComponent,
     CourseComponent,
-    SearchComponent
+    SearchComponent,
+    DurationPipe,
   ],
   imports: [
     BrowserModule,
