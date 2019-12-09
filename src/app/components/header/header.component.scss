@@ -1,0 +1,40 @@
+@import '../../../assets/scss/styles';
+.header {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: $charcoal-grey;
+  color: $white;
+  font-family: "sans-serif";
+  font-size: 14px;
+  z-index: 1;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    padding-bottom: 22px;
+  }
+  &__logo {
+    width: auto;
+    height: 40px;
+    cursor: pointer;
+  }
+  &__controls {
+    display: flex;
+    align-items: center;
+
+    &-item {
+      margin-left: 25px;
+    }
+  }
+  &__icon {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+}
+
+// TODO media

@@ -28,7 +28,6 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
             ],
             "scripts": []
           },
@@ -124,6 +123,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-mentoring"
+    }
+  },
+  "defaultProject": "angular-mentoring",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

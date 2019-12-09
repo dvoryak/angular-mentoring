@@ -1,1 +1,27 @@
-<p>course-page works!</p>
+<div class="container">
+    <div class="courses__add">
+        <button
+                class="courses__add-button"
+                (click)="onCreateCourse()">
+            <i class="courses__icon fa fa-plus" aria-hidden="true"></i>
+            <span class="courses__text">Add course</span>
+        </button>
+    </div>
+    <div class="courses">
+        <app-course
+                class="courses__item"
+                *ngFor="let course of courses"
+                [course]="course"
+                (edit)="onEdit()"
+                (delete)="onDelete()">
+        </app-course>
+    </div>
+    <div class="courses__more">
+        <button
+                class="courses__more-button"
+                (click)="onShowMore()">
+            <i></i>
+            <span class="courses__more-text">{{'Load more' | uppercase}}</span>
+        </button>
+    </div>
+</div>

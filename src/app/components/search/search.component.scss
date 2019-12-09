@@ -1,0 +1,33 @@
+@import '../../../assets/scss/_variables.scss';
+.search {
+  margin-top: 24px;
+  margin-bottom: 40px;
+
+  &__controls {
+    position: relative;
+  }
+  &__icon {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    font-size: 20px;
+  }
+  &__input {
+    padding-left: 42px;
+    width: 360px;
+    height: 48px;
+    border-radius: 3px;
+    border: solid 1px $light-blue;
+  }
+  &__button {
+    margin-left: 6px;
+    padding: 13px 24px;
+    background-color: $sick-green;
+    color: $white;
+    border-radius: 3px;
+    border-color: transparent;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.13px;
+  }
+}

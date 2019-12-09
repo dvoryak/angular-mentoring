@@ -3,13 +3,25 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.sass']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  public logo = 'assets/images/logo.png';
+  public isLogged = false;
+  public userName = 'Pavlo Dvoriak';
 
-  ngOnInit() {
+  constructor() {  }
+
+  ngOnInit(): void {
+  }
+
+  public onLogOff(): void {
+    this.isLogged = false;
+  }
+
+  public onLogIn(): void {
+    this.isLogged = true;
   }
 
 }

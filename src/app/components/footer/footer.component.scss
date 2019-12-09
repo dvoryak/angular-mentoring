@@ -1,0 +1,20 @@
+@import '../../../assets/scss/styles';
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: $charcoal-grey;
+  padding: 20px 0;
+  z-index: 1;
+
+  &_copyright {
+    color: $silver;
+    //font-family: $sourceSansPro;
+    font-weight: 300;
+    font-size: 14px;
+    text-align: right;
+    line-height: 1.71;
+  }
+}

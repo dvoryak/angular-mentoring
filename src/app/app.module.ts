@@ -7,6 +7,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { CoursePageComponent } from './components/course-page/course-page.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { CourseComponent } from './components/course/course.component';
+import { SearchComponent } from './components/search/search.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,11 +18,15 @@ import { CoursePageComponent } from './components/course-page/course-page.compon
     HeaderComponent,
     FooterComponent,
     LogoComponent,
-    CoursePageComponent
+    CoursePageComponent,
+    BreadcrumbComponent,
+    CourseComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
