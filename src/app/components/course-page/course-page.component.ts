@@ -24,4 +24,8 @@ export class CoursePageComponent implements OnInit {
 
   public onShowMore(): void {}
 
+  onCourseSearch($event: string) {
+    console.log('Search');
+    this.courses = COURSES.filter(x => x.description.includes($event));
+  }
 }
