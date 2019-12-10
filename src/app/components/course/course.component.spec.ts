@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseComponent } from './course.component';
 import {CourseModel} from '../../entity';
+import {By} from '@angular/platform-browser';
 
 describe('CourseComponent', () => {
 
@@ -34,8 +35,10 @@ describe('CourseComponent', () => {
   });
 
   it('raises the onEdit event when clicked', () => {
-    const comp = new CourseComponent();
+    const comp = fixture.componentInstance;
     comp.course = course;
+
+    fixture.detectChanges();
 
     comp.edit.subscribe((selectedCourse: CourseModel) =>
         expect(selectedCourse).toBe(course));
@@ -43,12 +46,16 @@ describe('CourseComponent', () => {
   });
 
   it('raises the onDelete event when clicked', () => {
-    const comp = new CourseComponent();
+    const comp = fixture.componentInstance;
     comp.course = course;
 
     comp.delete.subscribe((selectedCourse: CourseModel) =>
         expect(selectedCourse).toBe(course));
-    comp.onDelete();
+
+    const btn = fixture.debugElement.query(By.css('.delete__button'));
+    btn.triggerEventHandler('click', {});
+    fixture.detectChanges();
+
   });
 
   it('should create', () => {
