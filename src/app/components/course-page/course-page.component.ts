@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CourseModel} from '../../entity';
 import {COURSES} from '../../shared/courses.constant';
+import {FilterPipe} from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-course-page',
@@ -10,7 +11,7 @@ import {COURSES} from '../../shared/courses.constant';
 export class CoursePageComponent implements OnInit {
   public courses: CourseModel[];
 
-  constructor() { }
+  constructor(private filterPipe: FilterPipe) { }
 
   ngOnInit(): void {
     this.courses = COURSES;
@@ -24,8 +25,8 @@ export class CoursePageComponent implements OnInit {
 
   public onShowMore(): void {}
 
-  onCourseSearch($event: string) {
+  onCourseSearch(filter: string) {
     console.log('Search');
-    this.courses = COURSES.filter(x => x.description.includes($event));
+    this.courses = this.filterPipe.transform(COURSES, filter);
   }
 }

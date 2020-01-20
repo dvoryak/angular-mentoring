@@ -14,6 +14,7 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { CourseBorderDirective } from './directives/course-border.directive';
 import {SearchComponent} from './components/search/search.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -27,14 +28,15 @@ import {SearchComponent} from './components/search/search.component';
     SearchComponent,
     DurationPipe,
     OrderByPipe,
-    CourseBorderDirective
+    CourseBorderDirective,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [FilterPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

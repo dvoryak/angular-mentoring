@@ -1,24 +1,21 @@
-
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  Input,
-  OnInit,
-  Renderer2
-} from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 
 @Directive({
-  selector: '[appCourseBorder]'
+  selector: '[appBorderChanging]'
 })
 export class CourseBorderDirective implements OnInit, AfterViewInit {
-  @Input() creationDate: Date;
-  public borderColor: string;
-  public currentDate = new Date();
 
   constructor(
       private renderer: Renderer2,
       private el: ElementRef) {
+  }
+  @Input() creationDate: Date;
+  private borderColor: string;
+  private currentDate = new Date();
+
+  private compareDates(firstDate: Date): number {
+    const timeDifference = this.currentDate.getTime() - firstDate.getTime();
+    return Math.floor(timeDifference / (1000 * 3600 * 24));
   }
 
   ngOnInit(): void {
@@ -29,17 +26,14 @@ export class CourseBorderDirective implements OnInit, AfterViewInit {
     this.renderer.setStyle(this.el.nativeElement, 'border', `1px solid ${this.borderColor}`);
   }
 
-  public courseBorder(creationDate: Date): void {
-    const daysDiff = this.compareDates(creationDate, this.currentDate);
-    const isGreenBorder = !!(creationDate < this.currentDate) &&
-        (daysDiff <= 14);
-    const isBlueBorder = !!(creationDate > this.currentDate);
-    this.borderColor = isGreenBorder ? '#9bc837' : isBlueBorder ? '#30b6dd' : 'transparent';
-  }
-
-  public compareDates(firstDate: Date, secondDate: Date): number {
-    const timeDifference = secondDate.getTime() - firstDate.getTime();
-    const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
-    return daysDifference;
+  private courseBorder(creationDate: Date): void {
+    const daysDifference = this.compareDates(creationDate);
+    const isGreenBorder = (creationDate < this.currentDate) && (daysDifference <= 14);
+    const isBlueBorder = (creationDate > this.currentDate);
+    if (isGreenBorder) {
+      this.borderColor = '#9bc837';
+    } else {
+      this.borderColor = isBlueBorder ? '#30b6dd' : 'transparent';
+    }
   }
 }
