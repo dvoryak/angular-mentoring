@@ -12,6 +12,7 @@ export class SearchComponent implements OnInit {
   // TODO placeholder text
   public placeholder = 'Text to search';
   public value = '';
+  @Output() courseSearch = new EventEmitter<string>();
 
   constructor() { }
 
@@ -26,10 +27,7 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  public clearSearch(): void {
-    this.isSubmitted = false;
-    this.searchForm.controls.searchText.setValue('');
+  public onInputChange(value: string): void {
+    this.courseSearch.emit(value);
   }
-
-  public onInputChange(queryLength: number): void {}
 }

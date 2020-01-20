@@ -1,15 +1,17 @@
-<div class="course">
+<div class="course"
+     appBorderChanging
+     [creationDate]="course?.creationDate">
     <div class="course__content">
         <div class="course__info">
-            <h2 class="course__title">{{course?.title}}</h2>
+            <h2 class="course__title">{{course?.title | uppercase}}</h2>
             <div class="course__data">
                 <span class="course__data-item">
                     <i class="course__icon fa fa-clock-o" aria-hidden="true"></i>
-                    {{course?.duration}}
+                    {{course?.duration | duration}}
                 </span>
                 <time class="course__data-item">
                     <i class="course__icon fa fa-calendar" aria-hidden="true"></i>
-                    {{course?.creationDate}}
+                    {{course?.creationDate | date: "d MMM, yyyy"}}
                 </time>
             </div>
         </div>
