@@ -16,6 +16,7 @@ import { CourseBorderDirective } from './directives/course-border.directive';
 import {SearchComponent} from './components/search/search.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { ModalConfirmComponent } from './shared/modal-confirm/modal-confirm.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ModalConfirmComponent } from './shared/modal-confirm/modal-confirm.comp
     OrderByPipe,
     CourseBorderDirective,
     FilterPipe,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,11 @@
-import {IUserModel} from '../user-model';
+import {IUser} from '../user-model';
 
-export class UserModel implements IUserModel {
+
+export class User implements IUser {
     id: number;
     firstName: string;
     lastName: string;
-
-    constructor(id: number, firstName: string, lastName: string) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    email: string;
+    fakeToken: string;
+    password: string;
 }
