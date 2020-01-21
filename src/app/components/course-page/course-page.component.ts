@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CourseModel} from '../../entity';
-import {COURSES} from '../../shared/courses.constant';
 import {FilterPipe} from '../../pipes/filter.pipe';
+import {CourseService} from '../../services/course.service';
 
 @Component({
   selector: 'app-course-page',
@@ -11,10 +11,10 @@ import {FilterPipe} from '../../pipes/filter.pipe';
 export class CoursePageComponent implements OnInit {
   public courses: CourseModel[];
 
-  constructor(private filterPipe: FilterPipe) { }
+  constructor(private filterPipe: FilterPipe, private courseService: CourseService) { }
 
   ngOnInit(): void {
-    this.courses = COURSES;
+    this.courseService.getCourses().subscribe(courses => this.courses = courses);
   }
 
   public onCreateCourse(): void {}
@@ -27,6 +27,6 @@ export class CoursePageComponent implements OnInit {
 
   onCourseSearch(filter: string) {
     console.log('Search');
-    this.courses = this.filterPipe.transform(COURSES, filter);
+    this.courses = this.filterPipe.transform(this.courses, filter);
   }
 }

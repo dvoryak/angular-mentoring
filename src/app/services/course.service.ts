@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CourseModel} from '../entity';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {COURSES} from '../shared/courses.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +19,7 @@ export class CourseService {
     },
     {
       id: 2,
-      title: 'Video Course 1. Name tag',
+      title: 'Video Course 2. Name tag',
       creationDate: new Date('2019-12-7'),
       duration: '93',
       // tslint:disable-next-line:max-line-length
@@ -28,7 +27,7 @@ export class CourseService {
     },
     {
       id: 3,
-      title: 'Video Course 1. Name tag',
+      title: 'Video Course 3. Name tag',
       creationDate: new Date('2020-12-07'),
       duration: '123',
       // tslint:disable-next-line:max-line-length
@@ -40,7 +39,7 @@ export class CourseService {
   private courseData = this.courseSource.asObservable();
 
   public getCourses(): Observable<CourseModel[]> {
-    this.courseSource.next(COURSES);
+    this.courseSource.next(CourseService.COURSES);
     return this.courseData;
   }
 
