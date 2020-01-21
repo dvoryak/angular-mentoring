@@ -15,6 +15,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { CourseBorderDirective } from './directives/course-border.directive';
 import {SearchComponent} from './components/search/search.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { ModalConfirmComponent } from './shared/modal-confirm/modal-confirm.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     DurationPipe,
     OrderByPipe,
     CourseBorderDirective,
-    FilterPipe
+    FilterPipe,
+    ModalConfirmComponent
   ],
   imports: [
     BrowserModule,
