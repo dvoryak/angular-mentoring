@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CourseModel} from '../../entity';
 import {FilterPipe} from '../../pipes/filter.pipe';
 import {CourseService} from '../../services/course.service';
@@ -6,7 +6,8 @@ import {CourseService} from '../../services/course.service';
 @Component({
   selector: 'app-course-page',
   templateUrl: './course-page.component.html',
-  styleUrls: ['./course-page.component.scss']
+  styleUrls: ['./course-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursePageComponent implements OnInit {
   public courses: CourseModel[];

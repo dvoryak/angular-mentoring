@@ -1,10 +1,21 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2
+} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-modal-confirm',
   templateUrl: './modal-confirm.component.html',
-  styleUrls: ['./modal-confirm.component.scss']
+  styleUrls: ['./modal-confirm.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalConfirmComponent implements OnInit, OnDestroy {
 
