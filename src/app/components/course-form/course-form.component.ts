@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CourseModel} from '../../entity';
+import {Router} from '@angular/router';
 
 export const AUTHORS = [
   {
@@ -40,7 +41,8 @@ export class CourseFormComponent implements OnInit {
   public selectedAuthors: string[] = [];
 
   constructor(
-      private ref: ChangeDetectorRef
+      private ref: ChangeDetectorRef,
+      private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class CourseFormComponent implements OnInit {
 
   public onCancelClick(): void {
     console.log('Cancel event initiated');
+    this.router.navigateByUrl('/courses');
   }
 
   public removeAuthor(index: number): void {

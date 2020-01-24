@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CourseModel} from '../../entity';
 import {FilterPipe} from '../../pipes/filter.pipe';
 import {CourseService} from '../../services/course.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-course-page',
@@ -21,13 +22,16 @@ export class CoursePageComponent implements OnInit {
   private startPaging = 0;
   private pagingSize = 10;
 
-  constructor(private filterPipe: FilterPipe, private courseService: CourseService) { }
+  constructor(private filterPipe: FilterPipe, private courseService: CourseService, private router: Router) { }
 
   ngOnInit(): void {
     this._courses = this.courseService.getCourses();
   }
 
-  public onCreateCourse(): void {}
+  public onCreateCourse(): void {
+    console.log('Create course event initiated');
+    this.router.navigateByUrl('/create-course');
+  }
 
   public onEdit(): void {}
 
