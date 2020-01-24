@@ -56,6 +56,9 @@
     font-size: 14px;
     line-height: 1.5;
     background: $silver;
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
   }
   &__no-scroll {
     overflow: hidden!important;

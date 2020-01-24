@@ -23,7 +23,7 @@ export class CoursePageComponent implements OnInit {
   constructor(private filterPipe: FilterPipe, private courseService: CourseService) { }
 
   ngOnInit(): void {
-    this.courseService.getCourses().subscribe(courses => this.courses = courses);
+    this.courses = this.courseService.getCourses();
   }
 
   public onCreateCourse(): void {}
@@ -63,5 +63,6 @@ export class CoursePageComponent implements OnInit {
 
   private submitDelete(course: CourseModel): void {
     this.courseService.removeCourse(course.id);
+    this.courses = this.courseService.getCourses();
   }
 }
