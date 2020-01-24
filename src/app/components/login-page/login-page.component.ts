@@ -9,7 +9,7 @@ import {User} from '../../entity/impl/user-model';
 export class LoginPageComponent implements OnInit {
 
   public submitted = false;
-  public formUser: User;
+  public formUser: User = new User();
 
   constructor() { }
 
@@ -17,6 +17,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    console.log('User submitted');
     this.submitted = true;
   }
 
