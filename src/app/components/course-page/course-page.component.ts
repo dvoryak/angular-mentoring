@@ -10,12 +10,12 @@ import {CourseService} from '../../services/course.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursePageComponent implements OnInit {
-  public courses: CourseModel[];
-  public course: CourseModel;
-  private isWarningVisible = false;
-  private isEditModalVisible: boolean;
-  private modalTitle: string;
-  private modalMessage: string;
+  private _courses: CourseModel[];
+  private _course: CourseModel;
+  private _isWarningVisible = false;
+  private _isEditModalVisible: boolean;
+  private _modalTitle: string;
+  private _modalMessage: string;
   private isPaging = true;
   private event: string;
   private startPaging = 0;
@@ -24,7 +24,7 @@ export class CoursePageComponent implements OnInit {
   constructor(private filterPipe: FilterPipe, private courseService: CourseService) { }
 
   ngOnInit(): void {
-    this.courses = this.courseService.getCourses();
+    this._courses = this.courseService.getCourses();
   }
 
   public onCreateCourse(): void {}
@@ -32,7 +32,7 @@ export class CoursePageComponent implements OnInit {
   public onEdit(): void {}
 
   public onDelete(course: CourseModel): void {
-    this.course = course;
+    this._course = course;
     this.setModalInfo(course, this.event);
     console.log('Delete action');
   }
@@ -41,29 +41,49 @@ export class CoursePageComponent implements OnInit {
 
   onCourseSearch(filter: string) {
     console.log('Search');
-    this.courses = this.filterPipe.transform(this.courses, filter);
+    this._courses = this.filterPipe.transform(this._courses, filter);
   }
 
   public closeWarning(): void {
-    this.isWarningVisible = false;
-    this.isEditModalVisible = false;
+    this._isWarningVisible = false;
+    this._isEditModalVisible = false;
   }
 
   public checkModalConfirmation(confirmation: boolean): void {
-    this.isWarningVisible = !this.isWarningVisible;
+    this._isWarningVisible = !this._isWarningVisible;
     if (confirmation) {
-      this.submitDelete(this.course);
+      this.submitDelete(this._course);
     }
   }
 
   private setModalInfo(course: CourseModel, event: string): void {
-    this.modalTitle = `${event} course`;
-    this.modalMessage = `Do you really want to ${event} ${course.title}?`;
-    this.isWarningVisible = !this.isWarningVisible;
+    this._modalTitle = `${event} course`;
+    this._modalMessage = `Do you really want to ${event} ${course.title}?`;
+    this._isWarningVisible = !this._isWarningVisible;
   }
 
   private submitDelete(course: CourseModel): void {
     this.courseService.removeCourse(course.id);
-    this.courses = this.courseService.getCourses();
+    this._courses = this.courseService.getCourses();
+  }
+
+  get modalMessage(): string {
+    return this._modalMessage;
+  }
+
+  get modalTitle(): string {
+    return this._modalTitle;
+  }
+  get isEditModalVisible(): boolean {
+    return this._isEditModalVisible;
+  }
+  get isWarningVisible(): boolean {
+    return this._isWarningVisible;
+  }
+  get course(): CourseModel {
+    return this._course;
+  }
+  get courses(): CourseModel[] {
+    return this._courses;
   }
 }
