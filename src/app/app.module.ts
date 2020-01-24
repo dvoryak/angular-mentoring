@@ -19,6 +19,7 @@ import { ModalConfirmComponent } from './shared/modal-confirm/modal-confirm.comp
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { AddCoursePageComponent } from './components/add-course-page/add-course-page.component';
 import { CourseFormComponent } from './components/course-form/course-form.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CourseFormComponent } from './components/course-form/course-form.compon
     ModalConfirmComponent,
     LoginPageComponent,
     AddCoursePageComponent,
-    CourseFormComponent
+    CourseFormComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
