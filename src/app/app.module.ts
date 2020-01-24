@@ -9,7 +9,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CoursePageComponent } from './components/course-page/course-page.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CourseComponent } from './components/course/course.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { CourseBorderDirective } from './directives/course-border.directive';
@@ -17,6 +17,8 @@ import {SearchComponent} from './components/search/search.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { ModalConfirmComponent } from './shared/modal-confirm/modal-confirm.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { AddCoursePageComponent } from './components/add-course-page/add-course-page.component';
+import { CourseFormComponent } from './components/course-form/course-form.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,15 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     CourseBorderDirective,
     FilterPipe,
     ModalConfirmComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    AddCoursePageComponent,
+    CourseFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [FilterPipe],
   bootstrap: [AppComponent]
