@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} fr
 import {FormControl, FormGroup} from '@angular/forms';
 import {CourseModel} from '../../entity';
 import {Router} from '@angular/router';
+import {CourseService} from '../../services/course.service';
 
 export const AUTHORS = [
   {
@@ -42,7 +43,8 @@ export class CourseFormComponent implements OnInit {
 
   constructor(
       private ref: ChangeDetectorRef,
-      private router: Router
+      private router: Router,
+      private courseService: CourseService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +53,15 @@ export class CourseFormComponent implements OnInit {
   }
 
   public onCourseSubmit(): void {
-    console.log('Save event initiated');
+    const id = this.courseForm.value.id;
+    const title = this.courseForm.value.title;
+    const description = this.courseForm.value.description;
+    const duration = this.courseForm.value.duration;
+    const date = this.courseForm.value.date;
+
+    const courseModel = new CourseModel(new Date().getMilliseconds(), title, new Date(date), duration, description);
+    this.courseService.createCourse(courseModel);
+    console.log(`Course: ${courseModel}`);
   }
 
   public addAuthor(author: {id: number, name: string}): void {

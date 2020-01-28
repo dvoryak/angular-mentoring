@@ -9,24 +9,15 @@ import {AddCoursePageComponent} from './components/add-course-page/add-course-pa
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginPageComponent,
-    data: {
-      breadcrumb: 'Login'
-    }
+    component: LoginPageComponent
   },
   {
     path: 'courses',
-    component: CoursePageComponent,
-    data: {
-      breadcrumb: 'Courses'
-    }
+    component: CoursePageComponent
   },
   {
     path: 'create-course',
-    component: AddCoursePageComponent,
-    data: {
-      breadcrumb: 'Create'
-    }
+    component: AddCoursePageComponent
   },
   {path: '', redirectTo: '/courses', pathMatch: 'full'},
   {path: '**', component: NotFoundComponent},
