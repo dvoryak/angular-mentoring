@@ -14,3 +14,14 @@ body {
 .content {
     margin-bottom: 140px;
 }
+
+.button {
+    color: $white;
+    cursor: pointer;
+    &_decline {
+        background-color: darken(red, 10%);
+    }
+    &_success {
+        background-color: $sick-green;
+    }
+}
