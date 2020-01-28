@@ -7,13 +7,13 @@ module.exports = (server) => {
 	router.post('/auth/login', (req, res, next) => {
 		let users = server.db.getState().users,
 			matchedUser = users.find((user) => {
-				return user.login.toUpperCase() === req.body.login.toUpperCase();
+				return user.email.toUpperCase() === req.body.email.toUpperCase();
 			});
 
 		if(!matchedUser) {
 			res.status(401).send('Wrong username');
 		} else if(matchedUser.password === req.body.password) {
-			res.json({ token: matchedUser.fakeToken});
+			res.json({ token: matchedUser.token});
 		} else {
 			res.status(401).send("Wrong password");
 		}
@@ -22,7 +22,7 @@ module.exports = (server) => {
 	router.post('/auth/userinfo', (req, res, next) => {
 		let users = server.db.getState().users,
 			matchedUser = users.find((user) => {
-				return user.fakeToken === req.body.token;//('Authorization');
+				return user.token === req.body.token;//('Authorization');
 			});
 			
 		if(!matchedUser) {

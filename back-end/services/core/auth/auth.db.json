@@ -1,24 +1,21 @@
 {
-	"users": [
-  {
-    "id": 1,
-    "fakeToken": "58ebfdf7f1f558c5c86e17f6",
-    "name": {
-      "first": "FirstName",
-      "last": "LastName"
+  "users": [
+    {
+      "id": 1,
+      "token": "58ebfdf7f1f558c5c86e17f6",
+      "firstName": "FirstName1",
+      "lastName": "LastName1",
+      "email": "flastname1@mail.ru",
+      "password": "flastname1"
     },
-    "login": "flastname",
-    "password": "flastname"
-  },
-  {
-    "id": 2,
-    "fakeToken": "58ebfdf7ec92657b493b24da",
-    "name": {
-      "first": "Brock",
-      "last": "Beasley"
-    },
-    "login": "Morales",
-    "password": "id"
-  }
-]
+    {
+      "id": 1,
+      "token": "58ebfdf7f1f558c5c86e17f6",
+      "firstName": "FirstName",
+      "lastName": "LastName",
+      "email": "flastname@mail.ru",
+      "password": "flastname"
+    }
+  ]
 }
+
