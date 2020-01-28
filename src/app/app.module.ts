@@ -10,16 +10,16 @@ import { CoursePageComponent } from './components/course-page/course-page.compon
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CourseComponent } from './components/course/course.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { DurationPipe } from './pipes/duration.pipe';
-import { OrderByPipe } from './pipes/order-by.pipe';
-import { CourseBorderDirective } from './directives/course-border.directive';
 import {SearchComponent} from './components/search/search.component';
-import { FilterPipe } from './pipes/filter.pipe';
 import { ModalConfirmComponent } from './shared/modal-confirm/modal-confirm.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { AddCoursePageComponent } from './components/add-course-page/add-course-page.component';
 import { CourseFormComponent } from './components/course-form/course-form.component';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
+import {NotFoundComponent} from './shared/not-found/not-found.component';
+import {DurationPipe} from "./pipes/duration.pipe";
+import {OrderByPipe} from "./pipes/order-by.pipe";
+import {CourseBorderDirective} from "./directives/course-border.directive";
+import {FilterPipe} from "./pipes/filter.pipe";
 
 @NgModule({
   declarations: [
@@ -39,7 +39,12 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
     LoginPageComponent,
     AddCoursePageComponent,
     CourseFormComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    FilterPipe,
+    ModalConfirmComponent,
+    LoginPageComponent,
+    AddCoursePageComponent,
+    CourseFormComponent
   ],
   imports: [
     BrowserModule,
