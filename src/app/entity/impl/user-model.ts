@@ -1,13 +1,18 @@
-import {IUserModel} from '../user-model';
+import {IUser} from '../user-model';
 
-export class UserModel implements IUserModel {
-    id: number;
-    firstName: string;
-    lastName: string;
 
-    constructor(id: number, firstName: string, lastName: string) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+export class User implements IUser {
+    public id: number;
+    public firstName: string;
+    public lastName: string;
+    public email: string;
+    public password: string;
+    constructor(user?: User) {
+        this.id = user && user.id || null;
+        this.firstName = user && user.firstName || '';
+        this.lastName = user && user.lastName || '';
+        this.email = user && user.email || '';
+        this.password = user && user.password || '';
     }
+
 }

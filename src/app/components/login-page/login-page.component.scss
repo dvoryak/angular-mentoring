@@ -1,0 +1,76 @@
+@import "../../../assets/scss/styles";
+
+.login-form {
+  &__container {
+    padding: 24px;
+    width: 368px;
+    background-color: $white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+    box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  }
+  &__title {
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
+  &__item {
+    margin-bottom: 27px;
+
+    &-error-container {
+      position: relative;
+    }
+  }
+  &__caption {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__label {
+    color: grey;
+  }
+  &__required {
+    font-size: 12px;
+    color: grey;
+  }
+  &__input {
+    width: 320px;
+    margin-top: 9px;
+    padding: 12px;
+    border: 1px solid $pale-grey;
+    border-radius: 3px;
+  }
+  &__error-field {
+    width: 320px;
+    position: absolute;
+    left: 12px;
+    padding-top: 3px;
+  }
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+  }
+  &__link {
+    font-size: 12px;
+    color: $blue;
+  }
+  &__button {
+    padding: 8px 16px;
+    color: $cool-grey;
+    background-color: $pale-grey;
+  }
+}
+
+.error-message {
+  font-size: 12px;
+  color: red;
+
+  //&_position {
+  //    position: absolute;
+  //    top: 27px;
+  //    left: 0;
+  //}
+}

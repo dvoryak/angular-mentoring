@@ -14,9 +14,18 @@
                 *ngFor="let course of courses | orderBy"
                 [course]="course"
                 (edit)="onEdit()"
-                (delete)="onDelete()">
+                (delete)="onDelete(course)">
         </app-course>
     </div>
+    <app-modal-confirm
+            *ngIf="isWarningVisible"
+            [modalTitle]="modalTitle"
+            [modalMessage]="modalMessage"
+            (closeModal)="closeWarning()"
+            (modalSubmit)="checkModalConfirmation($event)"
+            (modalCancel)="checkModalConfirmation($event)">
+    </app-modal-confirm>
+
     <div class="courses__more">
         <button
                 class="courses__more-button"
