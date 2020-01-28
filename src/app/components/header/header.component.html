@@ -2,18 +2,13 @@
     <div class="container">
         <div class="header__wrapper">
             <a routerLink="" class="header__logo-container">
-                <img [src]="logo" alt="courses logo" class="header__logo">
+                <img src="../../../../assets/images/logo.png" alt="courses logo" class="header__logo">
             </a>
-
-            <ng-container
-                    *ngIf="isLogged; then loggedIn; else loggedOut">
-            </ng-container>
-
-            <ng-template #loggedIn>
+            <ng-container *ngIf="(currentLoggedUser | async) != null">
                 <div class="header__controls">
                     <p class="header__controls-item">
                         <i class="header__icon fa fa-user" aria-hidden="true"></i>
-                        {{userName}}
+                        {{(currentLoggedUser | async).firstName + ' ' + (currentLoggedUser | async).lastName }}
                     </p>
                     <a
                             class="header__controls-item"
@@ -22,16 +17,16 @@
                         Log off
                     </a>
                 </div>
-            </ng-template>
-
-            <ng-template #loggedOut>
+            </ng-container>
+            <ng-container *ngIf="(currentLoggedUser | async) == null">
                 <a
                         class="header__link"
-                        (click)="onLogIn()" routerLink="login">
+                        (click)="onLogIn()"
+                        routerLink="/login">
                     <i class="header__icon fa fa-sign-in" aria-hidden="true"></i>
                     User login
                 </a>
-            </ng-template>
+            </ng-container>
         </div>
     </div>
 </header>

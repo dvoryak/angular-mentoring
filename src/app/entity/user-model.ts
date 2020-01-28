@@ -4,6 +4,9 @@ export interface IUser {
     lastName: string;
     email: string;
     password: string;
-    fakeToken?: string;
+    token?: string;
 }
+
+export type UserAuth = Pick<IUser, 'email' | 'password'>;
+export type UserToken = Pick<IUser, 'token'>;
 

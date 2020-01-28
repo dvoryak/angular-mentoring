@@ -1,27 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {User} from '../../entity';
+import {tap} from "rxjs/operators";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
+    public currentLoggedUser: Observable<User>;
 
-  public logo = 'assets/images/logo.png';
-  public isLogged = false;
-  public userName = 'Pavlo Dvoriak';
+    constructor(
+        private authService: AuthService,
+        private router: Router,
+        private ref: ChangeDetectorRef
+    ) {
+    }
 
-  constructor() {  }
+    public onLogOff(): void {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+    }
 
-  ngOnInit(): void {
-  }
+    public onLogIn(): void {
+    }
 
-  public onLogOff(): void {
-    this.isLogged = false;
-  }
+    ngOnInit(): void {
+        this.currentLoggedUser = this.authService.getUser()
+            .pipe(tap(data => console.log(data)));
 
-  public onLogIn(): void {
-    this.isLogged = true;
-  }
-
+    }
 }

@@ -7,12 +7,14 @@ export class User implements IUser {
     public lastName: string;
     public email: string;
     public password: string;
+    public token: string;
     constructor(user?: User) {
         this.id = user && user.id || null;
         this.firstName = user && user.firstName || '';
         this.lastName = user && user.lastName || '';
         this.email = user && user.email || '';
         this.password = user && user.password || '';
+        this.token = user && user.token || '';
     }
 
 }

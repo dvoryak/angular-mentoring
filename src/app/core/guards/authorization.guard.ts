@@ -6,15 +6,15 @@ import {AuthService} from '../../services/auth.service';
   providedIn: 'root'
 })
 export class AuthorizationGuard implements CanActivate {
-  constructor(
+    constructor(
       private router: Router,
       private authorizationService: AuthService
   ) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const currentUser = this.authorizationService.getUserInfo();
-    return !!currentUser;
+      return this.authorizationService.isAuthenticated();
   }
+
 
 }
