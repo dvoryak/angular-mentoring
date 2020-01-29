@@ -19,8 +19,9 @@ const routes: Routes = [
     path: 'create-course',
     component: AddCoursePageComponent
   },
+  {path: 'not-found', component: NotFoundComponent},
   {path: '', redirectTo: '/courses', pathMatch: 'full'},
-  {path: '**', component: NotFoundComponent},
+  {path: '**', redirectTo: '/not-found', pathMatch: 'full'}
 ];
 
 
