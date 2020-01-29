@@ -13,8 +13,8 @@
                 class="courses__item"
                 *ngFor="let course of courses | orderBy"
                 [course]="course"
-                (edit)="onEdit()"
-                (delete)="onDelete(course)">
+                (edit)="onCourseEdit(course)"
+                (delete)="onCourseDelete(course)">
         </app-course>
     </div>
     <app-modal-confirm

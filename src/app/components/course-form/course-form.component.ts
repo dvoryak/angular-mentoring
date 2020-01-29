@@ -53,16 +53,24 @@ export class CourseFormComponent implements OnInit {
   }
 
   public onCourseSubmit(): void {
-    const id = this.courseForm.value.id;
+    const id = this.course == null ? null : this.course.id;
     const title = this.courseForm.value.title;
     const description = this.courseForm.value.description;
     const duration = this.courseForm.value.duration;
     const date = this.courseForm.value.date;
 
-    const courseModel = new CourseModel(new Date().getMilliseconds(), title, new Date(date), duration, description);
-    this.courseService.createCourse(courseModel);
+    const courseById = this.courseService.getCourseById(id);
+    if (courseById) {
+      console.log('Update course');
+      const courseModel = new CourseModel(id, title, new Date(date), duration, description);
+      this.courseService.updateCourse(courseModel);
+    } else {
+      console.log('Create course');
+      const courseModel = new CourseModel(new Date().getMilliseconds(), title, new Date(date), duration, description);
+      this.courseService.createCourse(courseModel);
+    }
+
     this.router.navigateByUrl('/courses');
-    console.log(`Course: ${courseModel}`);
   }
 
   public addAuthor(author: {id: number, name: string}): void {
