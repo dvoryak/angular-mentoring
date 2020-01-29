@@ -61,6 +61,7 @@ export class CourseFormComponent implements OnInit {
 
     const courseModel = new CourseModel(new Date().getMilliseconds(), title, new Date(date), duration, description);
     this.courseService.createCourse(courseModel);
+    this.router.navigateByUrl('/courses');
     console.log(`Course: ${courseModel}`);
   }
 
