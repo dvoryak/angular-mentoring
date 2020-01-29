@@ -21,6 +21,7 @@ import {DurationPipe} from './pipes/duration.pipe';
 import {OrderByPipe} from './pipes/order-by.pipe';
 import {CourseBorderDirective} from './directives/course-border.directive';
 import {FilterPipe} from './pipes/filter.pipe';
+import { EditCourseComponent } from './components/edit-course/edit-course.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {FilterPipe} from './pipes/filter.pipe';
     ModalConfirmComponent,
     LoginPageComponent,
     AddCoursePageComponent,
-    CourseFormComponent
+    CourseFormComponent,
+    EditCourseComponent
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CourseModel} from '../../entity';
 import {FilterPipe} from '../../pipes/filter.pipe';
 import {CourseService} from '../../services/course.service';
 import {Router} from '@angular/router';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-course-page',
@@ -17,15 +18,14 @@ export class CoursePageComponent implements OnInit {
   private _isEditModalVisible: boolean;
   private _modalTitle: string;
   private _modalMessage: string;
-  private isPaging = true;
   private event: string;
-  private startPaging = 0;
-  private pagingSize = 10;
 
   constructor(private filterPipe: FilterPipe, private courseService: CourseService, private router: Router) { }
 
   ngOnInit(): void {
-    this._courses = this.courseService.getCourses();
+   this.courseService.getCourses()
+       .pipe(tap(data => console.log(data)))
+       .subscribe(courses => this._courses = courses);
   }
 
   public onCreateCourse(): void {
@@ -33,15 +33,18 @@ export class CoursePageComponent implements OnInit {
     this.router.navigateByUrl('/create-course');
   }
 
-  public onEdit(): void {}
-
-  public onDelete(course: CourseModel): void {
-    this._course = course;
-    this.setModalInfo(course, this.event);
-    console.log('Delete action');
+  public onCourseEdit(course: CourseModel): void {
+    this.router.navigateByUrl(`/edit-course/${course.id}`);
   }
 
-  public onShowMore(): void {}
+  public onCourseDelete(course: CourseModel): void {
+    this._course = course;
+    this.event = 'delete';
+    this.setModalInfo(course, this.event);
+  }
+
+  public onShowMore(): void {
+  }
 
   onCourseSearch(filter: string) {
     console.log('Search');
@@ -54,9 +57,9 @@ export class CoursePageComponent implements OnInit {
   }
 
   public checkModalConfirmation(confirmation: boolean): void {
-    this._isWarningVisible = !this._isWarningVisible;
+    this._isWarningVisible = !this.isWarningVisible;
     if (confirmation) {
-      this.submitDelete(this._course);
+      this.submitDelete(this.course);
     }
   }
 
@@ -68,8 +71,8 @@ export class CoursePageComponent implements OnInit {
 
   private submitDelete(course: CourseModel): void {
     this.courseService.removeCourse(course.id);
-    this._courses = this.courseService.getCourses();
   }
+
 
   get modalMessage(): string {
     return this._modalMessage;
