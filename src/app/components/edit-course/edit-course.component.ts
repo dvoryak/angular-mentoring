@@ -9,16 +9,19 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./edit-course.component.scss']
 })
 export class EditCourseComponent implements OnInit {
-  private course: CourseModel;
+  private _course: CourseModel;
   private id: string;
-
-
   constructor(private courseService: CourseService, private route: ActivatedRoute) {
   }
 
+
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.course = this.courseService.getCourseById(Number(this.id));
+    this._course = this.courseService.getCourseById(Number(this.id));
     console.log('init edit');
+  }
+
+  get course(): CourseModel {
+    return this._course;
   }
 }
