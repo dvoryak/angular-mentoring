@@ -20,20 +20,20 @@ export class AuthService {
         private http: HttpClient, private router: Router) {
     }
 
-    public login(username: string, password: string): Observable<boolean> {
+    public login(username: string, password: string): void {
 
         this.http.post<User>(`${SERVER_ENDPOINT}/${LOGIN_PATH}`, {email: username, password})
             .pipe(tap(token => {
                     if (token) {
-                        this.setUser(token.token);
+                        this.setToken(token.token);
                         this.$isAuthenticated.next(true);
                         this.$currentLoggedUserSubject.next(token);
+                        this.router.navigateByUrl('/courses');
                     }
                     this.$isAuthenticated.next(false);
                 }),
             ).subscribe();
 
-        return this.$isAuthenticated.asObservable();
     }
 
     public logout(): void {
@@ -42,24 +42,24 @@ export class AuthService {
     }
 
     public getUser(): Observable<User> {
-        const tokenUser = this.getCurrentUser();
+        const tokenUser = this.getToken();
         this.http.post<User>(`${SERVER_ENDPOINT}/${USER_INFO_PATH}`, {token: tokenUser})
             .pipe(tap(user => this.$currentLoggedUserSubject.next(user)))
             .subscribe();
         return this.$currentLoggedUserSubject.asObservable();
     }
 
-    public isAuthenticated(): boolean {
-        return this.$isAuthenticated.value;
+    public isAuthenticated(): Observable<boolean> {
+        return this.$isAuthenticated.asObservable();
     }
 
 
-    private getCurrentUser(): string {
+    private getToken(): string {
         return localStorage.getItem('token');
     }
 
-    private setUser(user: string): void {
-        localStorage.setItem('token', user);
+    private setToken(token: string): void {
+        localStorage.setItem('token', token);
     }
 
 }

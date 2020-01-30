@@ -24,14 +24,8 @@ export class LoginPageComponent implements OnInit {
   public onSubmit(): void {
     console.log('Login event');
     this.submitted = true;
-    this.authService.login(this.formUser.email, this.formUser.password)
-        .subscribe(data => {
-          if (data) {
-            this.router.navigateByUrl('/courses');
-          }
-        });
+    this.authService.login(this.formUser.email, this.formUser.password);
   }
-
 
 
 }
