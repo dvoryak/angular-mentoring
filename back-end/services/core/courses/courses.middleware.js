@@ -15,7 +15,7 @@ module.exports = (server) => {
 		let	courses = server.db.getState().courses;
 
 		if (!!query.textFragment) {
-			courses = courses.filter((course) => course.name.concat(course.description).toUpperCase().indexOf(query.textFragment.toUpperCase()) >= 0);
+			courses = courses.filter((course) => course.description.concat(course.description).toUpperCase().indexOf(query.textFragment.toUpperCase()) >= 0);
 		}
 
 		if(sort) {
@@ -42,7 +42,9 @@ module.exports = (server) => {
 			});
 		}
 
-		res.json(courses);
+		courses.map(course => course.creationDate = new Date(course.creationDate))
+
+		res.json(courses.filter(course => course != null));
 	});
 
 	router.get('/error', function(req, res, next) {
@@ -51,6 +53,34 @@ module.exports = (server) => {
 		res.status(parseInt(query.code, 10)).send({message: 'Error'});
 	});
 
-	
+	router.post('/courses', (req, res, next) => {
+		console.log(`Create course body=${req.body.toString()}`);
+		server.db.getState().courses.push(req.body);
+
+		res.json(server.db.getState().courses);
+	});
+
+	router.put('/courses', (req, res, next) => {
+		console.log(`Update course by id=${req.body.id}`);
+		let courses = server.db.getState().courses;
+
+		var findElemIndex = courses.findIndex(course => course.id === req.body.id);
+		courses[findElemIndex] = req.body;
+
+		res.json(courses);
+	});
+
+	router.put('/courses/remove', (req, res, next) => {
+		console.log(`Delete course body=${req.body.id}`);
+		let courses = server.db.getState().courses;
+
+		var findElemIndex = courses.findIndex(course => course.id === req.body.id);
+		courses.splice(findElemIndex, 1);
+
+		res.json(server.db.getState().courses);
+	});
+
+
+
 	return router;
 };
