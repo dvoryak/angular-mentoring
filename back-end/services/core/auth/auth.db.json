@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 1,
-      "token": "58ebfdf7f1f558c5c86e17f6",
+      "token": "tokenA",
       "firstName": "Pavel",
       "lastName": "Dvoriak",
       "email": "flastname1@mail.ru",
@@ -10,7 +10,7 @@
     },
     {
       "id": 1,
-      "token": "58ebfdf7f1f558c5c86e17f6",
+      "token": "tokenB",
       "firstName": "FirstName",
       "lastName": "LastName",
       "email": "flastname@mail.ru",
