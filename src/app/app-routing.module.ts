@@ -5,6 +5,7 @@ import {NotFoundComponent} from './shared/not-found/not-found.component';
 import {CoursePageComponent} from './components/course-page/course-page.component';
 import {AddCoursePageComponent} from './components/add-course-page/add-course-page.component';
 import {EditCourseComponent} from './components/edit-course/edit-course.component';
+import {AuthorizationGuard} from './core/guards/authorization.guard';
 
 
 const routes: Routes = [
@@ -14,15 +15,18 @@ const routes: Routes = [
   },
   {
     path: 'courses',
-    component: CoursePageComponent
+    component: CoursePageComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'create-course',
-    component: AddCoursePageComponent
+    component: AddCoursePageComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'edit-course/:id',
-    component: EditCourseComponent
+    component: EditCourseComponent,
+    canActivate: [AuthorizationGuard]
   },
   {path: 'not-found', component: NotFoundComponent},
   {path: '', redirectTo: '/courses', pathMatch: 'full'},
