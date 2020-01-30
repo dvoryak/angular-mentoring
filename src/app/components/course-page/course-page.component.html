@@ -8,10 +8,10 @@
             <span class="courses__text">Add course</span>
         </button>
     </div>
-    <div class="courses"  *ngIf="courses && courses.length; else noData">
+    <div class="courses"  *ngIf="(courses | async) != null && (courses | async).length; else noData">
         <app-course
                 class="courses__item"
-                *ngFor="let course of courses | orderBy"
+                *ngFor="let course of (courses | async) | orderBy"
                 [course]="course"
                 (edit)="onCourseEdit(course)"
                 (delete)="onCourseDelete(course)">

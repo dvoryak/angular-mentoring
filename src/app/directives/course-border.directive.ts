@@ -14,7 +14,10 @@ export class CourseBorderDirective implements OnInit, AfterViewInit {
   private currentDate = new Date();
 
   private compareDates(firstDate: Date): number {
-    const timeDifference = this.currentDate.getTime() - firstDate.getTime();
+    if (this.currentDate == null || firstDate == null) {
+      return 0;
+    }
+    const timeDifference = new Date(this.currentDate).getTime() - new Date(firstDate).getTime();
     return Math.floor(timeDifference / (1000 * 3600 * 24));
   }
 
@@ -28,8 +31,8 @@ export class CourseBorderDirective implements OnInit, AfterViewInit {
 
   private courseBorder(creationDate: Date): void {
     const daysDifference = this.compareDates(creationDate);
-    const isGreenBorder = (creationDate < this.currentDate) && (daysDifference <= 14);
-    const isBlueBorder = (creationDate > this.currentDate);
+    const isGreenBorder = (creationDate < new Date(this.currentDate)) && (daysDifference <= 14);
+    const isBlueBorder = (creationDate > new Date(this.currentDate));
     if (isGreenBorder) {
       this.borderColor = '#9bc837';
     } else {

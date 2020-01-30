@@ -30,8 +30,6 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.currentLoggedUser = this.authService.getUser()
-            .pipe(tap(data => console.log(data)));
-
+        this.currentLoggedUser = this.authService.getUser();
     }
 }

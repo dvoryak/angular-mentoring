@@ -4,6 +4,7 @@ import {FilterPipe} from '../../pipes/filter.pipe';
 import {CourseService} from '../../services/course.service';
 import {Router} from '@angular/router';
 import {tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-course-page',
@@ -12,7 +13,7 @@ import {tap} from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursePageComponent implements OnInit {
-  private _courses: CourseModel[];
+  private _courses: Observable<CourseModel[]>;
   private _course: CourseModel;
   private _isWarningVisible = false;
   private _isEditModalVisible: boolean;
@@ -23,9 +24,8 @@ export class CoursePageComponent implements OnInit {
   constructor(private filterPipe: FilterPipe, private courseService: CourseService, private router: Router) { }
 
   ngOnInit(): void {
-   this.courseService.getCourses()
-       .pipe(tap(data => console.log(data)))
-       .subscribe(courses => this._courses = courses);
+    this._courses = this.courseService.getCourses()
+       .pipe(tap(data => console.log(data)));
   }
 
   public onCreateCourse(): void {
@@ -48,7 +48,7 @@ export class CoursePageComponent implements OnInit {
 
   onCourseSearch(filter: string) {
     console.log('Search');
-    this._courses = this.filterPipe.transform(this._courses, filter);
+    this._courses = this.courseService.searchCourses(filter);
   }
 
   public closeWarning(): void {
@@ -70,7 +70,7 @@ export class CoursePageComponent implements OnInit {
   }
 
   private submitDelete(course: CourseModel): void {
-    this.courseService.removeCourse(course.id);
+    this.courseService.removeCourse(course.id).subscribe();
   }
 
 
@@ -90,7 +90,7 @@ export class CoursePageComponent implements OnInit {
   get course(): CourseModel {
     return this._course;
   }
-  get courses(): CourseModel[] {
+  get courses(): Observable<CourseModel[]> {
     return this._courses;
   }
 }
