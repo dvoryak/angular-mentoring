@@ -17,11 +17,9 @@ export class HeaderComponent implements OnInit {
   }
 
   public onLogOff(): void {
-    this.isLogged = false;
   }
 
   public onLogIn(): void {
-    this.isLogged = true;
   }
 
 }

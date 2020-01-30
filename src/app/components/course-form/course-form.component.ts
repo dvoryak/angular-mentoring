@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CourseModel} from '../../entity';
+import {Router} from '@angular/router';
+import {CourseService} from '../../services/course.service';
 
 export const AUTHORS = [
   {
@@ -40,7 +42,9 @@ export class CourseFormComponent implements OnInit {
   public selectedAuthors: string[] = [];
 
   constructor(
-      private ref: ChangeDetectorRef
+      private ref: ChangeDetectorRef,
+      private router: Router,
+      private courseService: CourseService
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +53,24 @@ export class CourseFormComponent implements OnInit {
   }
 
   public onCourseSubmit(): void {
-    console.log('Save event initiated');
+    const id = this.course == null ? null : this.course.id;
+    const title = this.courseForm.value.title;
+    const description = this.courseForm.value.description;
+    const duration = this.courseForm.value.duration;
+    const date = this.courseForm.value.date;
+
+    const courseById = this.courseService.getCourseById(id);
+    if (courseById) {
+      console.log('Update course');
+      const courseModel = new CourseModel(id, title, new Date(date), duration, description);
+      this.courseService.updateCourse(courseModel);
+    } else {
+      console.log('Create course');
+      const courseModel = new CourseModel(new Date().getMilliseconds(), title, new Date(date), duration, description);
+      this.courseService.createCourse(courseModel);
+    }
+
+    this.router.navigateByUrl('/courses');
   }
 
   public addAuthor(author: {id: number, name: string}): void {
@@ -64,6 +85,7 @@ export class CourseFormComponent implements OnInit {
 
   public onCancelClick(): void {
     console.log('Cancel event initiated');
+    this.router.navigateByUrl('/courses');
   }
 
   public removeAuthor(index: number): void {
