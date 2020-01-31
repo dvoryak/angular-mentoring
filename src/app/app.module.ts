@@ -28,6 +28,9 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {appReducers} from './core/+store/core.state';
 import {metaReducers} from './root.store';
 import {AuthStoreEffects} from './core/+store/effects/auth.effects';
+import { DateInputComponent } from './components/course-form/date-input/date-input.component';
+import { DurationInputComponent } from './components/course-form/duration-input/duration-input.component';
+import { AuthorsInputComponent } from './components/course-form/authors-input/authors-input.component';
 
 const APP_EFFECTS = [
   AuthStoreEffects,
@@ -57,7 +60,10 @@ const APP_EFFECTS = [
     LoginPageComponent,
     AddCoursePageComponent,
     CourseFormComponent,
-    EditCourseComponent
+    EditCourseComponent,
+    DateInputComponent,
+    DurationInputComponent,
+    AuthorsInputComponent
   ],
   imports: [
     BrowserModule,

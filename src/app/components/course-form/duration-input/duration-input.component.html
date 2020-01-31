@@ -1,0 +1,10 @@
+<label for="duration" class="duration__label">Duration:</label>
+<input
+        name="duration"
+        class="duration__input"
+        id="duration"
+        [(ngModel)]="duration"
+        (ngModelChange)="writeValue(duration)"
+        (blur)="onBlur()"
+        [class.is-invalid]="control.invalid && control.touched">
+<span class="duration__minutes" *ngIf="duration">{{duration}}</span>

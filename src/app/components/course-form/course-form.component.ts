@@ -4,26 +4,26 @@ import {CourseModel} from '../../entity';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CourseService} from '../../services/course.service';
 import {tap} from 'rxjs/operators';
+import {AuthorModel, AuthorModelImpl} from '../../entity/author-model';
 
-export const AUTHORS = [
+export const AUTHORS: AuthorModel[] = [
   {
-    id: 1,
+    id: '1',
     name: 'First Author',
   },
   {
-    id: 2,
+    id: '2',
     name: 'Second Author',
   },
   {
-    id: 3,
+    id: '3',
     name: 'Third Author',
   },
   {
-    id: 4,
+    id: '4',
     name: 'Fourth Author',
   },
 ];
-
 
 @Component({
   selector: 'app-course-form',
@@ -37,7 +37,7 @@ export class CourseFormComponent implements OnInit {
   public courseForm: FormGroup;
   public isAutocompleteVisible = false;
   public authorsFormControl: FormControl = new FormControl();
-  public listOfAuthors: {id: number, name: string}[];
+  public listOfAuthors: AuthorModel[] = AUTHORS;
   public selectedAuthors: string[] = [];
 
   constructor(
@@ -70,7 +70,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listOfAuthors  = AUTHORS;
+    AUTHORS.forEach(x => this.listOfAuthors.push(new AuthorModelImpl(String(x.id), x.name)));
     const id = this.route.snapshot.paramMap.get('id');
     this.courseService.getCourseById(Number(id))
         .pipe(tap(data => console.log(data)))
@@ -106,7 +106,7 @@ export class CourseFormComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  public addAuthor(author: {id: number, name: string}): void {
+  public addAuthor(author: AuthorModel): void {
     this.isAutocompleteVisible = false;
     if (!this.selectedAuthors.find((item) => item === author.name)) {
       this.selectedAuthors.push(author.name);
@@ -121,7 +121,7 @@ export class CourseFormComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  public isSelected(author: {id: number, name: string}): boolean {
+  public isSelected(author: AuthorModel): boolean {
     return true;
   }
 

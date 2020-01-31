@@ -1,116 +1,63 @@
-@import "../../../assets/scss/styles";
+.add-course-page__container {
+  width: 1024px;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-.course-form {
-  &__container {
-    padding: 24px;
-    background-color: $white;
-    &.separate {
-      width: 731px;
-      margin: 30px auto;
-      border-radius: 8px;
-      box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
-    }
-  }
-  &__title {
-    margin-bottom: 22px;
-    font-size: 24px;
-    font-weight: 600;
-    color: $dark-navy;
-  }
-  &__item {
-    margin-bottom: 17px;
-    &_short {
-      width: 150px;
-    }
-    &_middle {
-      width: 312px;
-    }
-    &_list {
-      position: relative;
-    }
-    &-error-container {
-      position: relative;
-    }
-
-    &-caption {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-  &__label {
-    font-size: 14px;
-    font-weight: 600;
-    color: $slate-grey;
-  }
-  &__required {
-    font-size: 12px;
-    font-weight: normal;
-    color: $battleship-grey;
-  }
-  &__input {
-    width: 100%;
-    margin-top: 9px;
-    padding: 9px 12px;
-    border: 1px solid $pale-grey;
-    border-radius: 3px;
-  }
-  &__textarea {
-    @extend .course-form__input;
-    resize: none;
-    height: 108px;
-    &::placeholder {
-      font-size: 14px;
-      font-weight: normal;
-    }
-  }
-  &__error-field {
-    width: 320px;
-    position: absolute;
-    left: 12px;
-    padding-top: 3px;
-  }
-  &__controls {
+.add-course {
+  &__content {
+    flex: 1 0 auto;
+    padding-bottom: 20px;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-top: 5px;
-  }
-  &__link {
-    font-size: 12px;
-    color: $blue;
-  }
-  &__button {
-    margin-left: 12px;
-    padding: 8px 16px;
-    border-radius: 3px;
-  }
-  &__autocomplete {
-    position: absolute;
-    width: 100%;
-    background-color: $white;
-    z-index: 1;
-    border: 1px solid $pale-grey;
-    border-radius: 3px;
-    &-item {
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 10px;
-      border-bottom: 1px solid $pale-grey;
-      cursor: pointer;
-      &:hover {
-        background-color: $pale-grey;
-      }
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 
-.error-message {
-  font-size: 12px;
-  color: red;
+.add-form {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    justify-content: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 5px;
+
+    & > * {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__button {
+    padding: 5px 10px;
+    background-color: goldenrod;
+    border-radius: 5px;
+    color: black;
+    margin-right: 15px;
+    margin-top: 20px;
+    outline: none;
+    width: 60px;
+    cursor: pointer;
+
+    &:hover {
+      background-color:darkgoldenrod;
+    }
+
+    &[disabled] {
+      background-color: grey;
+    }
+  }
+}
+
+#title, #description {
+  display: block;
+  width: 100%;
+  outline: none;
+  padding: 5px;
 }
 
 .error {

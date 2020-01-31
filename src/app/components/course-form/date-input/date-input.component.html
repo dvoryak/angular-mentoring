@@ -1,0 +1,8 @@
+<label for="date">Date(mm/dd/yyyy):</label>
+<input
+        id="date"
+        [(ngModel)]="date"
+        (ngModelChange)="writeValue(date)"
+        (blur)="onBlur()"
+        [class.is-invalid]="control.invalid && control.touched"
+>
