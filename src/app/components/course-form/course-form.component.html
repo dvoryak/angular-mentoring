@@ -7,7 +7,6 @@
         <div class="course-form__item">
             <div class="course-form__item-caption">
                 <label for="title" class="course-form__label">Title:</label>
-                <span class="course-form__required">*required</span>
             </div>
             <div class="course-form__error-container">
                 <input
@@ -15,13 +14,15 @@
                         type="text"
                         class="course-form__input"
                         formControlName="title"
-                        placeholder="Text input">
+                        placeholder="Text input"
+                        [class.is-invalid]="title.invalid &&title.touched">
             </div>
+            <span class="error" *ngIf="title.hasError('required') && title.touched">*required</span>
+            <span class="error" *ngIf="title.hasError('maxlength') && title.touched">the maximum length is 50 characters</span>
         </div>
         <div class="course-form__item">
             <div class="course-form__item-caption">
                 <label for="description" class="course-form__label">Description:</label>
-                <span class="course-form__required">*required</span>
             </div>
             <div class="course-form__error-container">
                 <textarea
@@ -29,14 +30,17 @@
                         type="text"
                         class="course-form__textarea"
                         formControlName="description"
-                        placeholder="Add description">
+                        placeholder="Add description"
+                        [class.is-invalid]="description.invalid && description.touched">>
                 </textarea>
+                <span class="error" *ngIf="description.hasError('required') && description.touched">*required</span>
+                <span class="error" *ngIf="description.hasError('maxlength') && description.touched">the maximum length is 500 characters</span>
             </div>
         </div>
+
         <div class="course-form__item course-form__item_short">
             <div class="course-form__item-caption">
                 <label for="duration" class="course-form__label">Duration:</label>
-                <span class="course-form__required">*required</span>
             </div>
             <div class="course-form__error-container">
                 <input
@@ -46,21 +50,26 @@
                         formControlName="duration"
                         placeholder="minutes">
             </div>
+            <span class="error" *ngIf="duration.hasError('required') && duration.touched">*required</span>
+            <span class="error" *ngIf="duration.hasError('onlyNumbers') && duration.touched">the duration should contain only numbers allow</span>
         </div>
+
         <div class="course-form__item course-form__item_short">
             <div class="course-form__item-caption">
-                <label for="date" class="course-form__label">Date:</label>
-                <span class="course-form__required">*required</span>
+                <label for="creationDate" class="course-form__label">Date:</label>
             </div>
             <div class="course-form__error-container">
                 <input
-                        id="date"
+                        id="creationDate"
                         type="text"
                         class="course-form__input"
-                        formControlName="date"
+                        formControlName="creationDate"
                         placeholder="mm-dd-yyyy">
             </div>
+            <span class="error" *ngIf="creationDate.hasError('required') && creationDate.touched">*required</span>
+            <span class="error" *ngIf="creationDate.hasError('dateFormat') && creationDate.touched">the date should be in the format 'mm/dd/yyyy'</span>
         </div>
+
         <div class="course-form__item course-form__item_middle course-form__item_list">
             <div class="course-form__item-caption">
                 <label for="authors" class="course-form__label">Authors:</label>
@@ -71,10 +80,12 @@
                         id="authors"
                         type="text"
                         class="course-form__input"
-                        [formControl]="authors"
+                        [formControl]="authorsFormControl"
                         placeholder="Start typing"
                         autocomplete="off"
                         (click)="selectAuthor()">
+                <span class="error" *ngIf="authors.hasError('required') && authors.touched">*required</span>
+                <span class="error" *ngIf="authors.hasError('minAuthorLength') && authors.touched">please select at least one author</span>
             </div>
             <div
                     class="course-form__autocomplete"
