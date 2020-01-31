@@ -22,7 +22,7 @@ export class AuthService {
         this.$isAuthenticated.subscribe((v) => console.log(v));
     }
 
-    public login(username: string, password: string): void {
+    public login(username: string, password: string): Observable<User> {
 
         this.http.post<User>(`${SERVER_ENDPOINT}/${LOGIN_PATH}`, {email: username, password})
             .pipe(tap(token => {
@@ -38,6 +38,8 @@ export class AuthService {
                     }
                 }),
             ).subscribe();
+
+        return this.$currentLoggedUserSubject.asObservable();
 
     }
 
@@ -62,11 +64,11 @@ export class AuthService {
     }
 
 
-    private getToken(): string {
+    public getToken(): string {
         return localStorage.getItem('token');
     }
 
-    private setToken(token: string): void {
+    public setToken(token: string): void {
         localStorage.setItem('token', token);
     }
 

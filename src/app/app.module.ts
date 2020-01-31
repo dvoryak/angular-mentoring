@@ -22,6 +22,16 @@ import {OrderByPipe} from './pipes/order-by.pipe';
 import {CourseBorderDirective} from './directives/course-border.directive';
 import {FilterPipe} from './pipes/filter.pipe';
 import { EditCourseComponent } from './components/edit-course/edit-course.component';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {appReducers} from './core/+store/core.state';
+import {metaReducers} from './root.store';
+import {AuthStoreEffects} from './core/+store/effects/auth.effects';
+
+const APP_EFFECTS = [
+  AuthStoreEffects,
+];
 
 @NgModule({
   declarations: [
@@ -54,7 +64,11 @@ import { EditCourseComponent } from './components/edit-course/edit-course.compon
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    EffectsModule.forRoot(APP_EFFECTS),
+    StoreModule.forRoot(appReducers, { metaReducers }),
+    StoreRouterConnectingModule.forRoot(),
+
   ],
   providers: [FilterPipe],
   bootstrap: [AppComponent]
