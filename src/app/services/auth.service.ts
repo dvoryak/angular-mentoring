@@ -13,40 +13,50 @@ const SERVER_ENDPOINT = 'http://localhost:3004';
     providedIn: 'root'
 })
 export class AuthService {
-    private $currentLoggedUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+
+    private _$currentLoggedUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
     private $isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(
         private http: HttpClient, private router: Router) {
+        this.$isAuthenticated.subscribe((v) => console.log(v));
     }
 
-    public login(username: string, password: string): void {
+    public login(username: string, password: string): Observable<User> {
 
         this.http.post<User>(`${SERVER_ENDPOINT}/${LOGIN_PATH}`, {email: username, password})
             .pipe(tap(token => {
-                    if (token) {
+                    if (token.token) {
                         this.setToken(token.token);
                         this.$isAuthenticated.next(true);
-                        this.$currentLoggedUserSubject.next(token);
+                        this._$currentLoggedUserSubject.next(token);
                         this.router.navigateByUrl('/courses');
+                    } else {
+                        this.$isAuthenticated.next(false);
+                        this._$currentLoggedUserSubject.next(null);
+                        console.log(`Token ${token}`);
                     }
-                    this.$isAuthenticated.next(false);
                 }),
             ).subscribe();
+
+        return this.$currentLoggedUserSubject.asObservable();
 
     }
 
     public logout(): void {
         localStorage.removeItem('token');
-        this.$currentLoggedUserSubject.next(null);
+        this._$currentLoggedUserSubject.next(null);
     }
 
     public getUser(): Observable<User> {
         const tokenUser = this.getToken();
         this.http.post<User>(`${SERVER_ENDPOINT}/${USER_INFO_PATH}`, {token: tokenUser})
-            .pipe(tap(user => this.$currentLoggedUserSubject.next(user)))
+            .pipe(tap(user => {
+                this._$currentLoggedUserSubject.next(user);
+                this.$isAuthenticated.next(true);
+            }))
             .subscribe();
-        return this.$currentLoggedUserSubject.asObservable();
+        return this._$currentLoggedUserSubject.asObservable();
     }
 
     public isAuthenticated(): Observable<boolean> {
@@ -54,12 +64,20 @@ export class AuthService {
     }
 
 
-    private getToken(): string {
+    public getToken(): string {
         return localStorage.getItem('token');
     }
 
-    private setToken(token: string): void {
+    public setToken(token: string): void {
         localStorage.setItem('token', token);
+    }
+
+    get $currentLoggedUserSubject(): BehaviorSubject<User> {
+        return this._$currentLoggedUserSubject;
+    }
+
+    set $currentLoggedUserSubject(value: BehaviorSubject<User>) {
+        this._$currentLoggedUserSubject = value;
     }
 
 }
