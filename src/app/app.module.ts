@@ -22,6 +22,19 @@ import {OrderByPipe} from './pipes/order-by.pipe';
 import {CourseBorderDirective} from './directives/course-border.directive';
 import {FilterPipe} from './pipes/filter.pipe';
 import { EditCourseComponent } from './components/edit-course/edit-course.component';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {appReducers} from './core/+store/core.state';
+import {metaReducers} from './root.store';
+import {AuthStoreEffects} from './core/+store/effects/auth.effects';
+import { DateInputComponent } from './components/course-form/date-input/date-input.component';
+import { DurationInputComponent } from './components/course-form/duration-input/duration-input.component';
+import { AuthorsInputComponent } from './components/course-form/authors-input/authors-input.component';
+
+const APP_EFFECTS = [
+  AuthStoreEffects,
+];
 
 @NgModule({
   declarations: [
@@ -47,14 +60,21 @@ import { EditCourseComponent } from './components/edit-course/edit-course.compon
     LoginPageComponent,
     AddCoursePageComponent,
     CourseFormComponent,
-    EditCourseComponent
+    EditCourseComponent,
+    DateInputComponent,
+    DurationInputComponent,
+    AuthorsInputComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    EffectsModule.forRoot(APP_EFFECTS),
+    StoreModule.forRoot(appReducers, { metaReducers }),
+    StoreRouterConnectingModule.forRoot(),
+
   ],
   providers: [FilterPipe],
   bootstrap: [AppComponent]

@@ -3,18 +3,13 @@
             class="search">
         <div class="search__controls">
             <i class="search__icon fa fa-search" aria-hidden="true"></i>
-            <input
+            <input  #search
                     type="text"
                     (focus)="placeholder = ''"
                     (focusout)="placeholder = 'Text to search'"
                     placeholder="{{placeholder}}"
                     class="search__input"
-                    (change)="onInputChange(value)"
                     [(ngModel)]="value">
-            <button
-                    class="search__button"
-                    type="submit" (click)="onSubmit()">Search
-            </button>
         </div>
     </div>
 </div>

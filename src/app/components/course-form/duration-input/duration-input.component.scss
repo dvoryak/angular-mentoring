@@ -1,0 +1,15 @@
+.duration {
+  &__label {
+    display: block;
+  }
+
+  &__input {
+    display: inline-block;
+    padding: 5px;
+    outline: none;
+  }
+
+  &__minutes {
+    margin-left: 10px;
+  }
+}

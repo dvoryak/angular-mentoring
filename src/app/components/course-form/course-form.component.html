@@ -1,99 +1,81 @@
-<div class="course-form__container" [ngClass]="{'separate' : isSeparate}">
-    <form
-            [formGroup]="courseForm"
-            (ngSubmit)="onCourseSubmit()"
-            class="course-form">
-        <p class="course-form__title">{{title}}</p>
-        <div class="course-form__item">
-            <div class="course-form__item-caption">
-                <label for="title" class="course-form__label">Title:</label>
-                <span class="course-form__required">*required</span>
-            </div>
-            <div class="course-form__error-container">
-                <input
-                        id="title"
-                        type="text"
-                        class="course-form__input"
-                        formControlName="title"
-                        placeholder="Text input">
-            </div>
-        </div>
-        <div class="course-form__item">
-            <div class="course-form__item-caption">
-                <label for="description" class="course-form__label">Description:</label>
-                <span class="course-form__required">*required</span>
-            </div>
-            <div class="course-form__error-container">
-                <textarea
-                        id="description"
-                        type="text"
-                        class="course-form__textarea"
-                        formControlName="description"
-                        placeholder="Add description">
-                </textarea>
-            </div>
-        </div>
-        <div class="course-form__item course-form__item_short">
-            <div class="course-form__item-caption">
-                <label for="duration" class="course-form__label">Duration:</label>
-                <span class="course-form__required">*required</span>
-            </div>
-            <div class="course-form__error-container">
-                <input
-                        id="duration"
-                        type="text"
-                        class="course-form__input"
-                        formControlName="duration"
-                        placeholder="minutes">
-            </div>
-        </div>
-        <div class="course-form__item course-form__item_short">
-            <div class="course-form__item-caption">
-                <label for="date" class="course-form__label">Date:</label>
-                <span class="course-form__required">*required</span>
-            </div>
-            <div class="course-form__error-container">
-                <input
-                        id="date"
-                        type="text"
-                        class="course-form__input"
-                        formControlName="date"
-                        placeholder="mm-dd-yyyy">
-            </div>
-        </div>
-        <div class="course-form__item course-form__item_middle course-form__item_list">
-            <div class="course-form__item-caption">
-                <label for="authors" class="course-form__label">Authors:</label>
-                <span class="course-form__required">*required</span>
-            </div>
-            <div class="course-form__error-container">
-                <input
-                        id="authors"
-                        type="text"
-                        class="course-form__input"
-                        [formControl]="authors"
-                        placeholder="Start typing"
-                        autocomplete="off"
-                        (click)="selectAuthor()">
-            </div>
-            <div
-                    class="course-form__autocomplete"
-                    *ngIf="isAutocompleteVisible">
-                <div
-                        *ngFor="let author of listOfAuthors"
-                        class="course-form__autocomplete-item"
-                        [ngClass]="isSelected(author) ? 'selected' : ''"
-                        (click)="addAuthor(author)">
-                    {{ author.name }}
-                </div>
-            </div>
-        </div>
-        <div class="course-form__controls">
-            <button type="button"
-                    class="course-form__button button_decline button" (click)="onCancelClick()">Cancel</button>
-            <button
-                    class="course-form__button button_success button" type="submit">Save</button>
-        </div>
-    </form>
-</div>
+<div class="add-course-page__container">
+    <div class="add-course__content">
+        <div class="add-form__container">
+            <form  [formGroup]="courseForm"
+                   (ngSubmit)="onCourseSubmit()">
 
+                <label for="title">
+                    Title:
+                    <input
+                            formControlName="title"
+                            id="title"
+                            [class.is-invalid]="title.invalid &&title.touched">
+                </label>
+                <span
+                        class="error"
+                        *ngIf="title.hasError('required') && title.touched"
+                >*required</span>
+                <span
+                        class="error"
+                        *ngIf="title.hasError('maxlength') && title.touched"
+                >the maximum length is 50 characters</span>
+
+                <label for="description">
+                    Description:
+                    <textarea formControlName="description"
+                              id="description"
+                              rows="3"
+                              [class.is-invalid]="description.invalid && description.touched">
+          </textarea>
+                </label>
+                <span
+                        class="error"
+                        *ngIf="description.hasError('required') && description.touched"
+                >*required</span>
+                <span
+                        class="error"
+                        *ngIf="description.hasError('maxlength') && description.touched"
+                >the maximum length is 250 characters</span>
+
+                <app-date-input formControlName="creationDate"></app-date-input>
+                <span
+                        class="error"
+                        *ngIf="creationDate.hasError('required') && creationDate.touched"
+                >*required</span>
+                <span
+                        class="error"
+                        *ngIf="creationDate.hasError('dateFormat') && creationDate.touched"
+                >the date should be in the format 'mm/dd/yyyy'</span>
+
+                <app-duration-input formControlName="duration"></app-duration-input>
+                <span
+                        class="error"
+                        *ngIf="duration.hasError('required') && duration.touched"
+                >*required</span>
+                <span
+                        class="error"
+                        *ngIf="duration.hasError('onlyNumbers') && duration.touched"
+                >the duration should contain only numbers allow</span>
+
+                <app-authors-input [authors]="listOfAuthors" formControlName="authors"></app-authors-input>
+                <span
+                        class="error"
+                        *ngIf="authors.hasError('required') && authors.touched"
+                >*required</span>
+                <span
+                        class="error"
+                        *ngIf="authors.hasError('minAuthorLength') && authors.touched"
+                >please select at least one author</span>
+                <div>
+                    <button
+                            class="add-form__button"
+                            type="submit"
+                            [disabled]="courseForm.invalid"
+                    >Save
+                    </button>
+                    <button class="add-form__button" (click)="onCancelClick()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

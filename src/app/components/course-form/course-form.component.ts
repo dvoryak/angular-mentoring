@@ -1,29 +1,29 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CourseModel} from '../../entity';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CourseService} from '../../services/course.service';
 import {tap} from 'rxjs/operators';
+import {AuthorModel, AuthorModelImpl} from '../../entity/author-model';
 
-export const AUTHORS = [
+export const AUTHORS: AuthorModel[] = [
   {
-    id: 1,
+    id: '1',
     name: 'First Author',
   },
   {
-    id: 2,
+    id: '2',
     name: 'Second Author',
   },
   {
-    id: 3,
+    id: '3',
     name: 'Third Author',
   },
   {
-    id: 4,
+    id: '4',
     name: 'Fourth Author',
   },
 ];
-
 
 @Component({
   selector: 'app-course-form',
@@ -32,25 +32,45 @@ export const AUTHORS = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseFormComponent implements OnInit {
-
-  @Input() title = '';
   course: CourseModel;
   @Input() isSeparate: boolean;
   public courseForm: FormGroup;
   public isAutocompleteVisible = false;
-  public authors: FormControl = new FormControl();
-  public listOfAuthors: {id: number, name: string}[];
+  public authorsFormControl: FormControl = new FormControl();
+  public listOfAuthors: AuthorModel[] = AUTHORS;
   public selectedAuthors: string[] = [];
 
   constructor(
       private ref: ChangeDetectorRef,
       private router: Router,
       private courseService: CourseService,
-      private route: ActivatedRoute
-  ) {}
+      private route: ActivatedRoute,
+      private fb: FormBuilder
+  ) {
+    this.courseForm = this.fb.group({
+      id: null,
+      title: [null, [
+        Validators.required,
+        Validators.maxLength(50)
+      ]],
+      description: [null, [
+        Validators.required,
+        Validators.maxLength(500)
+      ]],
+      creationDate: [null, [
+        Validators.required
+      ]],
+      duration: [null, [
+        Validators.required
+      ]],
+      authors: [[], [
+        Validators.required
+      ]]
+    });
+  }
+
   ngOnInit(): void {
-    this.setFormValues();
-    this.listOfAuthors  = AUTHORS;
+    AUTHORS.forEach(x => this.listOfAuthors.push(new AuthorModelImpl(String(x.id), x.name)));
     const id = this.route.snapshot.paramMap.get('id');
     this.courseService.getCourseById(Number(id))
         .pipe(tap(data => console.log(data)))
@@ -60,7 +80,7 @@ export class CourseFormComponent implements OnInit {
             this.courseForm.controls.title.setValue(course.title);
             this.courseForm.controls.description.setValue(course.description);
             this.courseForm.controls.duration.setValue(course.duration);
-            this.courseForm.controls.date.setValue(course.creationDate);
+            this.courseForm.controls.creationDate.setValue(course.creationDate);
           }
         });
   }
@@ -86,14 +106,14 @@ export class CourseFormComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  public addAuthor(author: {id: number, name: string}): void {
+  public addAuthor(author: AuthorModel): void {
     this.isAutocompleteVisible = false;
     if (!this.selectedAuthors.find((item) => item === author.name)) {
       this.selectedAuthors.push(author.name);
       this.listOfAuthors = this.listOfAuthors
           .filter(item => this.selectedAuthors.indexOf(item.name) < 0);
     }
-    this.authors.patchValue(this.selectedAuthors);
+    this.authorsFormControl.patchValue(this.selectedAuthors);
   }
 
   public onCancelClick(): void {
@@ -101,26 +121,12 @@ export class CourseFormComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  public removeAuthor(index: number): void {
-    // (this.courseForm.get('authors') as FormArray).removeAt(index);
-  }
-
-  public isSelected(author: {id: number, name: string}): boolean {
+  public isSelected(author: AuthorModel): boolean {
     return true;
-    // return this.selectedAuthors.findIndex((item) => item === author.name) > -1;
   }
 
   public selectAuthor(): void {
     this.isAutocompleteVisible = true;
-  }
-  // deleteSelects(s) {
-  //     this.userSelects = this.userSelects.filter((item) => item.id !== s.id);
-  // }
-  //
-  public assignToNgModel(): void {
-    // this.userSelectsString = '';
-    // this.selectedAuthors.map((item) => this.userSelectsString += item.name + ' ');
-    // this.ref.detectChanges();
   }
 
   private setFormValues(): void {
@@ -129,8 +135,8 @@ export class CourseFormComponent implements OnInit {
       description: new FormControl(this.course && this.course.description || ''),
       duration: new FormControl(this.course && this.course.duration || ''),
       date: new FormControl(this.course && this.parseDate(this.course.creationDate) || ''),
-      authors: new FormControl(this.authors || []),
-    });
+      authors: new FormControl(this.authorsFormControl || []),
+    }, );
   }
 
   private parseDate(date: Date): string {
@@ -139,5 +145,27 @@ export class CourseFormComponent implements OnInit {
     }
     return date.toLocaleDateString('en-US').split('/').join('-');
   }
+
+  get title(): AbstractControl {
+    return this.courseForm.get('title');
+  }
+
+  get description(): AbstractControl {
+    return this.courseForm.get('description');
+  }
+
+  get creationDate(): AbstractControl {
+    return this.courseForm.get('creationDate');
+  }
+
+  get duration(): AbstractControl {
+    return this.courseForm.get('duration');
+  }
+
+  get authors(): AbstractControl {
+    return this.courseForm.get('authors');
+  }
+
+
 
 }
