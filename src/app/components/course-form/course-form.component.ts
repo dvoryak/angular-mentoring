@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CourseModel} from '../../entity';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CourseService} from '../../services/course.service';
+import {tap} from 'rxjs/operators';
 
 export const AUTHORS = [
   {
@@ -33,7 +34,7 @@ export const AUTHORS = [
 export class CourseFormComponent implements OnInit {
 
   @Input() title = '';
-  @Input() course: CourseModel;
+  course: CourseModel;
   @Input() isSeparate: boolean;
   public courseForm: FormGroup;
   public isAutocompleteVisible = false;
@@ -44,12 +45,24 @@ export class CourseFormComponent implements OnInit {
   constructor(
       private ref: ChangeDetectorRef,
       private router: Router,
-      private courseService: CourseService
+      private courseService: CourseService,
+      private route: ActivatedRoute
   ) {}
-
   ngOnInit(): void {
     this.setFormValues();
     this.listOfAuthors  = AUTHORS;
+    const id = this.route.snapshot.paramMap.get('id');
+    this.courseService.getCourseById(Number(id))
+        .pipe(tap(data => console.log(data)))
+        .subscribe(course => {
+          if (course != null) {
+            this.course = course;
+            this.courseForm.controls.title.setValue(course.title);
+            this.courseForm.controls.description.setValue(course.description);
+            this.courseForm.controls.duration.setValue(course.duration);
+            this.courseForm.controls.date.setValue(course.creationDate);
+          }
+        });
   }
 
   public onCourseSubmit(): void {
@@ -60,14 +73,14 @@ export class CourseFormComponent implements OnInit {
     const date = this.courseForm.value.date;
 
     const courseById = this.courseService.getCourseById(id);
-    if (courseById) {
+    if (id != null) {
       console.log('Update course');
       const courseModel = new CourseModel(id, title, new Date(date), duration, description);
-      this.courseService.updateCourse(courseModel);
+      this.courseService.updateCourse(courseModel).subscribe();
     } else {
       console.log('Create course');
       const courseModel = new CourseModel(new Date().getMilliseconds(), title, new Date(date), duration, description);
-      this.courseService.createCourse(courseModel);
+      this.courseService.createCourse(courseModel).subscribe();
     }
 
     this.router.navigateByUrl('/courses');
@@ -121,6 +134,9 @@ export class CourseFormComponent implements OnInit {
   }
 
   private parseDate(date: Date): string {
+    if (date == null) {
+      return 'N/A';
+    }
     return date.toLocaleDateString('en-US').split('/').join('-');
   }
 

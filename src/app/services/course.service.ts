@@ -1,69 +1,77 @@
 import {Injectable} from '@angular/core';
 import {CourseModel} from '../entity';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {tap} from 'rxjs/operators';
 
+
+const COURSES = 'courses';
+const SERVER_ENDPOINT = 'http://localhost:3004';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CourseService {
 
-    constructor() {
+    constructor(private http: HttpClient) {
+            this.fetchCourses();
     }
 
-    private static COURSES: CourseModel[] = [
-        {
-            id: 1,
-            title: 'Video Course 1. Name tag',
-            creationDate: new Date('2019-10-07'),
-            duration: '87',
-            // tslint:disable-next-line:max-line-length
-            description: 'Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college\'s classes. They\'re published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.'
-        },
-        {
-            id: 2,
-            title: 'Video Course 2. Name tag',
-            creationDate: new Date('2019-12-7'),
-            duration: '93',
-            // tslint:disable-next-line:max-line-length
-            description: 'Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college\'s classes. They\'re published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.'
-        },
-        {
-            id: 3,
-            title: 'Video Course 3. Name tag',
-            creationDate: new Date('2020-12-07'),
-            duration: '123',
-            // tslint:disable-next-line:max-line-length
-            description: 'Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college\'s classes. They\'re published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.'
-        },
-    ];
-
-    private courses = new BehaviorSubject<CourseModel[]>(CourseService.COURSES);
+    private courses = new BehaviorSubject<CourseModel[]>(null);
+    private course = new BehaviorSubject<CourseModel>(null);
 
     public getCourses(): Observable<CourseModel[]> {
         return this.courses.asObservable();
     }
 
-    createCourse(course: CourseModel): void {
-        CourseService.COURSES.push(course);
-        this.courses.next(CourseService.COURSES);
+    public searchCourses(searchText: string): Observable<CourseModel[]> {
+        this.http.get<CourseModel[]>(`${SERVER_ENDPOINT}/${COURSES}?textFragment=${searchText}`)
+            .pipe(tap(resp => this.courses.next(resp)))
+            .subscribe();
+
+        return this.courses.asObservable();
     }
 
-    getCourseById(id: number): CourseModel {
-        return CourseService.COURSES.find(item => item.id === id);
+    createCourse(course: CourseModel): Observable<any> {
+        return this.http.post<any>(`${SERVER_ENDPOINT}/${COURSES}`, {
+            id: course.id,
+            title: course.title,
+            creationDate: course.creationDate,
+            duration: course.duration,
+            description: course.description
+        }).pipe(tap(resp => this.courses.next(resp)));
     }
 
-    updateCourse(course: CourseModel): void {
-        const currentValue = CourseService.COURSES;
-        const foundItem = currentValue.findIndex(item => item.id === course.id);
-        currentValue[foundItem] = course;
-        this.courses.next(currentValue);
+    getCourseById(courseId: number): Observable<CourseModel> {
+        this.http.get<CourseModel[]>(`${SERVER_ENDPOINT}/${COURSES}?id=${courseId}`)
+            .pipe(tap(courses => this.course.next(courses[0])))
+            .subscribe();
+        return this.course.asObservable();
     }
 
-    removeCourse(id: number): void {
-        console.log('Remove course initiated for id=' + id);
-        CourseService.COURSES = CourseService.COURSES.filter(currentCourse => currentCourse.id !== id);
-        this.courses.next(CourseService.COURSES);
+    updateCourse(course: CourseModel): Observable<CourseModel[]> {
+        return this.http.put<CourseModel[]>(`${SERVER_ENDPOINT}/${COURSES}`,
+            {
+                id: course.id,
+                title: course.title,
+                creationDate: course.creationDate,
+                duration: course.duration,
+                description: course.description
+            }).pipe(tap(resp => this.courses.next(resp)));
+    }
+
+    removeCourse(courseId: number): Observable<CourseModel[]> {
+        console.log('Remove course initiated for id=' + courseId);
+        const params = new HttpParams();
+        params.append('id', String(courseId));
+        return this.http.put<CourseModel[]>(`${SERVER_ENDPOINT}/${COURSES}/remove`, {id: courseId})
+            .pipe(tap(resp => this.courses.next(resp)));
+    }
+
+    private fetchCourses(): void {
+        this.http.get<CourseModel[]>(`${SERVER_ENDPOINT}/${COURSES}`)
+            .pipe(tap(resp => this.courses.next(resp)))
+            .subscribe();
     }
 
 }
